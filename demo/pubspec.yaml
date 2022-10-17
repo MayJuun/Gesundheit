@@ -1,4 +1,4 @@
-name: gesundheit
+name: demo
 description: A new Flutter project.
 publish_to: 'none' 
 version: 1.0.0+1
@@ -8,15 +8,23 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.5
-  hooks_riverpod: 2.0.2
   flutter:
     sdk: flutter
+  gesundheit:
+    path: ../gesundheit
+  get_it: ^7.2.0
+  google_fonts: ^3.0.1
+  hooks_riverpod: ^2.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.1
 
 flutter:
   uses-material-design: true
-  
+
+        
+    
+    
+                                      
