@@ -31,65 +31,71 @@ class Logger extends ProviderObserver {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({required this.base, super.key});
 
   final Uri base;
 
   @override
-  Widget build(BuildContext context) {
-    return Watcher((context, ref, child) {
-      final goRouter = ref.watch(setupGoRouterCreator);
-      context.ref.update(uriParametersCreator, (p0) => base);
-      ref.read(themeEventsCreator(const ClientThemeEvents.setFirstLoadInfo()));
-      ref.read(themeEventsCreator(const ClientThemeEvents.loadLastTheme()));
-      ref.read(themeEventsCreator(const ClientThemeEvents.getPackageInfo()));
+  Widget build(BuildContext context, WidgetRef ref) {
+    final goRouter = ref.watch(setupGoRouterCreator);
+    ref.read(uriParametersCreator.state).state = base;
+    ref
+        .read(clientThemeProvider.notifier)
+        .mapEventsToStates(const ClientThemeEvents.setFirstLoadInfo());
+    ref
+        .read(clientThemeProvider.notifier)
+        .mapEventsToStates(const ClientThemeEvents.loadLastTheme());
+    ref
+        .read(clientThemeProvider.notifier)
+        .mapEventsToStates(const ClientThemeEvents.getPackageInfo());
 
-      final window = WidgetsBinding.instance.window;
-      window.onPlatformBrightnessChanged = () {
-        /// This callback is called every time the brightness changes.
-        WidgetsBinding.instance.handlePlatformBrightnessChanged();
+    final window = WidgetsBinding.instance.window;
+    window.onPlatformBrightnessChanged = () {
+      /// This callback is called every time the brightness changes.
+      WidgetsBinding.instance.handlePlatformBrightnessChanged();
 
-        final theme = ref.read(clientThemeCreator);
+      final theme = ref.read(clientThemeProvider);
 
-        /// This statement triggers a redraw if the phone's platform ever changes while the app is running
-        /// Otherwise, it wouldn't know to change themes to the new one
-        /// spec: https://stackoverflow.com/a/69784475
-        if (WidgetsBinding.instance.window.platformBrightness !=
-            theme.data.brightness) {
-          ref.read(themeEventsCreator(const ClientThemeEvents.loadLastTheme()));
-        }
-      };
+      /// This statement triggers a redraw if the phone's platform ever changes while the app is running
+      /// Otherwise, it wouldn't know to change themes to the new one
+      /// spec: https://stackoverflow.com/a/69784475
+      if (WidgetsBinding.instance.window.platformBrightness !=
+          theme.data.brightness) {
+        ref
+            .read(clientThemeProvider.notifier)
+            .mapEventsToStates(const ClientThemeEvents.loadLastTheme());
+      }
+    };
 
-      final theme = ref.watch(clientThemeCreator);
-      final localeStates = ref.watch(localeCreator);
+    final theme = ref.watch(clientThemeProvider);
+    final localeStates = ref.watch(localeCreator);
 
-      return MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        showSemanticsDebugger: false,
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      showSemanticsDebugger: false,
 
-        scaffoldMessengerKey: customClientAssets.scaffoldKey,
+      scaffoldMessengerKey: customClientAssets.scaffoldKey,
 
-        // *** THEMES ***
-        theme: theme.data,
-        themeMode: theme.themeMode,
+      // *** THEMES ***
+      theme: theme.data,
+      themeMode: theme.themeMode,
 
-        // *** ROUTES ***
-        // restorationScopeId: 'root',
-        routeInformationParser: goRouter.routeInformationParser,
-        routerDelegate: goRouter.routerDelegate,
-        routeInformationProvider: goRouter.routeInformationProvider,
+      // *** ROUTES ***
+      // restorationScopeId: 'root',
+      routeInformationParser: goRouter.routeInformationParser,
+      routerDelegate: goRouter.routerDelegate,
+      routeInformationProvider: goRouter.routeInformationProvider,
 
-        // *** LOCALES ***
-        localizationsDelegates: const [
-          ...AppLocalizations.localizationsDelegates,
-        ],
-        supportedLocales: const [
-          ...AppLocalizations.supportedLocales,
-        ],
-        // set initially stored locale info here
-        locale: localeStates.selectedLocale,
-      );
-    });
+      // *** LOCALES ***
+      localizationsDelegates: const [
+        ...AppLocalizations.localizationsDelegates,
+      ],
+      supportedLocales: const [
+        ...AppLocalizations.supportedLocales,
+      ],
+      // set initially stored locale info here
+      locale: localeStates.selectedLocale,
+    );
   }
 }
