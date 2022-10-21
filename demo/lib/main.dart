@@ -31,25 +31,31 @@ class Logger extends ProviderObserver {
   }
 }
 
-class MyApp extends ConsumerWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({required this.base, super.key});
 
   final Uri base;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final goRouter = ref.watch(setupGoRouterCreator);
-    ref.read(uriParametersCreator.state).state = base;
-    ref
-        .read(clientThemeProvider.notifier)
-        .mapEventsToStates(const ClientThemeEvents.setFirstLoadInfo());
-    ref
-        .read(clientThemeProvider.notifier)
-        .mapEventsToStates(const ClientThemeEvents.loadLastTheme());
-    ref
-        .read(clientThemeProvider.notifier)
-        .mapEventsToStates(const ClientThemeEvents.getPackageInfo());
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends ConsumerState<MyApp> {
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () async {
+      ref.read(uriParametersCreator.state).state = widget.base;
+      await ref
+          .read(clientThemeProvider.notifier)
+          .mapEventsToStates(const ClientThemeEvents.setFirstLoadInfo());
+      await ref
+          .read(clientThemeProvider.notifier)
+          .mapEventsToStates(const ClientThemeEvents.loadLastTheme());
+      await ref
+          .read(clientThemeProvider.notifier)
+          .mapEventsToStates(const ClientThemeEvents.getPackageInfo());
+    });
+    super.initState();
     final window = WidgetsBinding.instance.window;
     window.onPlatformBrightnessChanged = () {
       /// This callback is called every time the brightness changes.
@@ -67,9 +73,13 @@ class MyApp extends ConsumerWidget {
             .mapEventsToStates(const ClientThemeEvents.loadLastTheme());
       }
     };
+  }
 
+  @override
+  Widget build(BuildContext context) {
     final theme = ref.watch(clientThemeProvider);
     final localeStates = ref.watch(localeCreator);
+    final goRouter = ref.watch(setupGoRouterCreator);
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,

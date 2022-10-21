@@ -17,6 +17,7 @@ class HomeView extends StatelessWidget {
     height = MediaQuery.of(context).size.height * 0.1 > width * 0.2
         ? width * 0.2
         : height * 0.1;
+
     return MaterialApp(
       home: SafeArea(
         child: Scaffold(

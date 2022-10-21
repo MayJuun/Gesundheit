@@ -24,7 +24,7 @@ class ClientThemeStateNotifier extends StateNotifier<ClientThemeState> {
 
   Future<bool> mapEventsToStates(ClientThemeEvents events) async => events.map(
         themeModeChanged: (value) async {
-          await ref.watch(sharedPreferencesProvider(SPInteraction.setString(
+          await ref.read(sharedPreferencesProvider(SPInteraction.setString(
             key: 'theme',
             value: ThemeModeUtil().convertThemeModeToString(value.themeMode),
           )).selectAsync((data) => data));
@@ -34,7 +34,7 @@ class ClientThemeStateNotifier extends StateNotifier<ClientThemeState> {
           return true;
         },
         loadLastTheme: (value) async {
-          final data = await ref.watch(
+          final data = await ref.read(
               sharedPreferencesProvider(SPInteraction.getString(key: 'theme'))
                   .selectAsync((data) => data));
 
@@ -49,7 +49,7 @@ class ClientThemeStateNotifier extends StateNotifier<ClientThemeState> {
           return true;
         },
         setFirstLoadInfo: (ClientSetFirstLoadInfo value) async {
-          final data = await ref.watch(sharedPreferencesProvider(
+          final data = await ref.read(sharedPreferencesProvider(
                   SPInteraction.setBool(
                       key: 'isFirstLoad', value: value.firstLoad))
               .selectAsync((data) => data));
