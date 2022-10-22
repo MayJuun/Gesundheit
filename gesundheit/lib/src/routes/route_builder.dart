@@ -55,6 +55,19 @@ class HomeRoute extends GoRouteData {
 }
 
 /// ********** ********** *********** *********** **********
+/// *********** ROUTING / INHERITANCE FOR: HOME  ***********
+/// ********** ********** *********** *********** **********
+
+/// Path for logging in and confirming via one-time passcode
+@TypedGoRoute<PatientIndexRoute>(path: '/patientIndex')
+
+///  HOME ROUTE ***********
+class PatientIndexRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context) => const PatientSearchView();
+}
+
+/// ********** ********** *********** *********** **********
 /// *********** ROUTING / INHERITANCE FOR: DEMO ***********
 /// ********** ********** *********** *********** **********
 

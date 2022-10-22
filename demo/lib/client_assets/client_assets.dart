@@ -30,7 +30,7 @@ const clientApis = ClientApis(
 );
 
 const clientImages = ClientImages(
-  logo: 'assets/images/mpepu_logo.png',
+  logo: 'assets/caduceus.png',
 );
 
 const clientLinks = ClientLinks(

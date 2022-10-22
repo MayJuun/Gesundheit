@@ -12,7 +12,7 @@ class LoginView extends StatelessWidget {
           body: Center(
             child: FlutterLogin(
               title: clientAssets.clientApis.clientAppTitle,
-              logo: 'GESUNDHEIT',
+              logo: AssetImage('assets/caduceus.png'),
               onLogin: (_) {
                 HomeRoute().go(context);
                 return null;

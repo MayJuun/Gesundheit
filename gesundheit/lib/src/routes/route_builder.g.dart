@@ -9,6 +9,7 @@ part of 'route_builder.dart';
 List<GoRoute> get $appRoutes => [
       $loginRoute,
       $homeRoute,
+      $patientIndexRoute,
       $demoRoute,
     ];
 
@@ -39,6 +40,24 @@ extension $HomeRouteExtension on HomeRoute {
 
   String get location => GoRouteData.$location(
         '/',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+GoRoute get $patientIndexRoute => GoRouteData.$route(
+      path: '/patientIndex',
+      factory: $PatientIndexRouteExtension._fromState,
+    );
+
+extension $PatientIndexRouteExtension on PatientIndexRoute {
+  static PatientIndexRoute _fromState(GoRouterState state) =>
+      PatientIndexRoute();
+
+  String get location => GoRouteData.$location(
+        '/patientIndex',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

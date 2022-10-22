@@ -8,7 +8,7 @@ const ClientColorScheme clientColorSchemeLight = ClientColorScheme.light(
   isDark: false,
   bg: _AppColors.greySurface,
   greySurface: _AppColors.greySurface,
-  progressBar: _AppColors.primaryDark,
+  progressBar: _AppColors.blackBackground,
   progressComplete: _AppColors.progressComplete,
   progressUnanswered: _AppColors.progressUnanswered,
   grey: _AppColors.grey,
@@ -17,14 +17,14 @@ const ClientColorScheme clientColorSchemeLight = ClientColorScheme.light(
   focus: _AppColors.grey,
   notification: _AppColors.inCKGoldenrod,
   txtNotification: _AppColors.textDark,
-  txtSecondary: _AppColors.textLight,
+  txtSecondary: _AppColors.textDark,
   txt: _AppColors.textDark,
   txtLight: _AppColors.textLight,
   txtDark: _AppColors.textDark,
 
   /// Theme-defined colors
   brightness: Brightness.light,
-  primary: _AppColors.primary,
+  primary: _AppColors.offWhite,
   onPrimary: _AppColors.textLight,
   primaryContainer: _AppColors.primaryDark,
   secondary: _AppColors.secondary,
@@ -36,7 +36,7 @@ const ClientColorScheme clientColorSchemeLight = ClientColorScheme.light(
   onBackground: _AppColors.textDark,
   surface: Colors.white,
   onSurface: _AppColors.textDark,
-  txtGrey: _AppColors.textGrey,
+  txtGrey: Colors.black,
 );
 
 const ClientColorScheme clientColorSchemeDark = ClientColorScheme.dark(
@@ -79,7 +79,7 @@ abstract class _AppColors {
   static const Color inCKPlum = Color(0xFF403A60);
   static const Color inCKRust = Color(0xFFAB5C57);
   static const Color inCKGoldenrod = Color(0xFFFEAD77);
-  static const Color inCKOffWhite = Color(0xFFF5F5F5);
+  static const Color offWhite = Color(0xFFF5F5F5);
   static const Color inCKCharcoal = Color(0xFF545859);
   static const Color inCKWhite = Color(0xFFFFFFFF);
 
@@ -94,7 +94,7 @@ abstract class _AppColors {
 
   static const Color redLightMode = Color(0xFFA80F0F);
   static const Color redDarkMode = Color(0xFFFF7C7C);
-  static const Color greySurface = inCKOffWhite;
+  static const Color greySurface = offWhite;
   static const Color grey = Color(0xFFA6A6A6);
   static const Color blackSurface = Color(0xFF050505);
   static const Color blackBackground = Color(0xFF282929);
