@@ -50,6 +50,12 @@ extension $HomeRouteExtension on HomeRoute {
 GoRoute get $patientIndexRoute => GoRouteData.$route(
       path: '/patientIndex',
       factory: $PatientIndexRouteExtension._fromState,
+      routes: [
+        GoRouteData.$route(
+          path: 'patientInfo',
+          factory: $PatientInfoRouteExtension._fromState,
+        ),
+      ],
     );
 
 extension $PatientIndexRouteExtension on PatientIndexRoute {
@@ -58,6 +64,18 @@ extension $PatientIndexRouteExtension on PatientIndexRoute {
 
   String get location => GoRouteData.$location(
         '/patientIndex',
+      );
+
+  void go(BuildContext context) => context.go(location, extra: this);
+
+  void push(BuildContext context) => context.push(location, extra: this);
+}
+
+extension $PatientInfoRouteExtension on PatientInfoRoute {
+  static PatientInfoRoute _fromState(GoRouterState state) => PatientInfoRoute();
+
+  String get location => GoRouteData.$location(
+        '/patientIndex/patientInfo',
       );
 
   void go(BuildContext context) => context.go(location, extra: this);

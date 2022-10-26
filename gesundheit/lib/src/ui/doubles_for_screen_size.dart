@@ -51,6 +51,16 @@ double doubleBySize(BuildContext context, num number) {
   }
 }
 
+double doubleByPercent(BuildContext context, num percent) {
+  final height = activeHeight(context);
+  final width = activeWidth(context);
+  if (width > height) {
+    return height * percent / 100;
+  } else {
+    return width * percent / 100;
+  }
+}
+
 double doubleByHeight(BuildContext context, num number) {
   final height = activeHeight(context);
   if (height < mobileBreakPointHeight) {

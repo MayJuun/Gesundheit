@@ -90,29 +90,39 @@ class PatientSearchView extends StatelessWidget {
             )));
 
     return MaterialApp(
-        home: SafeArea(
-            child: Scaffold(
-                appBar: AppBar(
-                  backgroundColor: Colors.blueGrey,
-                  title: TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      label: Text('Search Patient'),
-                      prefix: Icon(Icons.search),
-                    ),
-                    initialValue: '',
-                    onChanged: (String newValue) {},
-                  ),
-                ),
-                backgroundColor: Colors.blueGrey,
-                drawer: const NavigationDrawer(),
-                body: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                        child: ListView.builder(
-                      itemBuilder: (BuildContext context, int index) =>
-                          patientCard(patients[index], () {}),
-                      itemCount: patients.length,
-                    ))))));
+      home: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.blueGrey,
+            title: TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                label: Text('Search Patient'),
+                prefix: Icon(Icons.search),
+              ),
+              initialValue: '',
+              onChanged: (String newValue) {},
+            ),
+          ),
+          backgroundColor: Colors.blueGrey,
+          drawer: const NavigationDrawer(),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              child: ListView.builder(
+                itemBuilder: (BuildContext context, int index) =>
+                    patientCard(patients[index], () {}),
+                itemCount: patients.length,
+              ),
+            ),
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () => PatientInfoRoute().go(context),
+            label: const Text('New Patient'),
+            icon: const Icon(Icons.add),
+          ),
+        ),
+      ),
+    );
   }
 }

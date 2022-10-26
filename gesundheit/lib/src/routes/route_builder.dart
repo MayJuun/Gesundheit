@@ -59,12 +59,23 @@ class HomeRoute extends GoRouteData {
 /// ********** ********** *********** *********** **********
 
 /// Path for logging in and confirming via one-time passcode
-@TypedGoRoute<PatientIndexRoute>(path: '/patientIndex')
+@TypedGoRoute<PatientIndexRoute>(
+  path: '/patientIndex',
+  routes: <TypedGoRoute<GoRouteData>>[
+    TypedGoRoute<PatientInfoRoute>(path: 'patientInfo'),
+  ],
+)
 
-///  HOME ROUTE ***********
+///  PATIENT INDEX ROUTE ***********
 class PatientIndexRoute extends GoRouteData {
   @override
   Widget build(BuildContext context) => const PatientSearchView();
+}
+
+///  PATIENT INFO ROUTE ***********
+class PatientInfoRoute extends GoRouteData {
+  @override
+  Widget build(BuildContext context) => const PatientInfoView();
 }
 
 /// ********** ********** *********** *********** **********
